@@ -20,17 +20,17 @@ Interactive API Documentation: Built-in Swagger UI and ReDoc
 
 Tech Stack
 
-FastAPI: Modern Python web framework
+FastAPI
 
-SQLAlchemy: SQL toolkit and ORM
+SQLAlchemy
 
-PostgreSQL/SQLite: Database
+PostgreSQL
 
-Pydantic: Data validation
+Pydantic
 
-python-jose: JWT token generation
+python-jose
 
-passlib: Password hashing with bcrypt
+passlib
 
 ```
 OrderSystem/
