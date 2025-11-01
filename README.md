@@ -32,6 +32,7 @@ python-jose: JWT token generation
 
 passlib: Password hashing with bcrypt
 
+```
 OrderSystem/
 ├── app/
 │   ├── main.py               # FastAPI application entry point
@@ -43,3 +44,4 @@ OrderSystem/
 │       ├── auth.py           # Authentication endpoints
 │       └── orders.py         # Order management endpoints
 └── README.md                
+```
