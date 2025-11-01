@@ -2,7 +2,7 @@
 
 A complete FastAPI-based order management system with user authentication, JWT tokens, and role-based access control.
 
-Features:
+## Features:
 
 User Authentication: JWT-based authentication with secure password hashing
 
@@ -18,7 +18,7 @@ Superuser Features: Superusers can view all orders and update order status
 
 Interactive API Documentation: Built-in Swagger UI and ReDoc
 
-Tech Stack
+## Tech Stack:
 
 FastAPI
 
@@ -32,6 +32,7 @@ python-jose
 
 passlib
 
+## Project Structure
 ```
 OrderSystem/
 ├── app/
