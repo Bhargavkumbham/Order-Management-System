@@ -1,11 +1,18 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status,Query
 from sqlalchemy.orm import Session
 from typing import List
 from app import models, schemas
 from app.database import get_db
 from app.auth import get_current_user, get_current_superuser
+from typing import Annotated
+import enum
 
 router = APIRouter()
+
+class OrderStatus(str, enum.Enum):
+    pending:str = "pending"
+    completed:str = "completed"
+
 
 #Create Order(user only)
 @router.post("/order/", response_model=schemas.OrderResponse, status_code=status.HTTP_201_CREATED)
@@ -91,19 +98,28 @@ def delete_order(
 @router.get("/user/orders/", response_model=List[schemas.OrderResponse])
 def get_user_orders(
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user)
+    current_user: models.User = Depends(get_current_user),
+    status: Annotated[OrderStatus | None, Query()] = None
 ):
-    orders = db.query(models.Order).filter(models.Order.user_id == current_user.id).all()
+    query= db.query(models.Order).filter(models.Order.user_id == current_user.id)
+    if status is not None:
+        query = query.filter(models.Order.status == status.value)
+    orders = query.all()
     return orders
 
 # List All Orders (Superuser only)
 @router.get("/orders/", response_model=List[schemas.OrderResponse])
 def list_all_orders(
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_superuser)
+    current_user: models.User = Depends(get_current_superuser),
+    status: Annotated[OrderStatus | None, Query()] = None
 ):
-    orders = db.query(models.Order).all()
+    query = db.query(models.Order)
+    if status is not None:
+        query = query.filter(models.Order.status == status.value)
+    orders = query.all()
     return orders
+
 
 # Get Specific Order (Superuser only)
 @router.get("/orders/{order_id}/", response_model=schemas.OrderResponse)
